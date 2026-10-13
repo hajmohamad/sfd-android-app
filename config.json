@@ -2,9 +2,45 @@
     "username": "4023623021",
     "password": "Anita3358@",
     "base_url": "https://sfd.ui.ac.ir",
-    "default_breakfast_self": "شهدا",
-    "default_lunch_self": "اختران (خواهران)",
-    "default_dinner_self": "شهدا",
-    "default_restaurant": "یاس دو خواهران",
-    "default_restaurant_id": "15"
+    "default_breakfast_self": "شهید مفتح",
+    "default_lunch_self": "اختران (برادران)",
+    "default_dinner_self": "شهید مفتح",
+    "default_restaurant": "رستوران یاس دو 2 **",
+    "default_restaurant_id": "14",
+    "payment_settings": {
+        "auto_generate_payment_link": true,
+        "auto_open_browser": true,
+        "default_topup_amount": 1000000,
+        "round_topup_to_nearest": 500000,
+        "poll_interval_seconds": 5,
+        "max_poll_wait_seconds": 300
+    },
+    "preferences": {
+        "skip_if_no_preference_match": true,
+        "lunch_priority": [
+            "جوجه چینی",
+            "چلو جوجه کباب",
+            "چلو کباب کوبیده مرغ",
+            "زرشک پلو با مرغ",
+          "ماکارونی"
+        ],
+        "dinner_priority": [
+            "جوجه چینی",
+            "چلو جوجه کباب",
+            "چلو کباب کوبیده مرغ",
+            "زرشک پلو با مرغ",
+            "شنیسل مرغ",
+            "پیتزا",
+            "خوراک مرغ",
+            "ساندویچ ماکارونی",
+                      "ماکارونی"
+
+        ],
+        "blacklist": [
+            "خوراک لوبیا",
+            "کوکو سبزی",
+            "چلو خورشت قورمه سبزی",
+            "چلو خورشت قیمه"
+        ]
+    }
 }
