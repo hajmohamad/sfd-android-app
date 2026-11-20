@@ -1288,9 +1288,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val adsCfg = AdManager.fetchAdsConfig(this@MainActivity)
-                if (adsCfg.enabled) {
+                if (adsCfg.enabled && adsCfg.loginAd?.enabled == true) {
                     val loginAd = adsCfg.loginAd
-                    if (loginAd != null && loginAd.imageUrl.isNotBlank()) {
+                    if (loginAd.imageUrl.isNotBlank()) {
                         AdManager.loadBitmap(loginAd.imageUrl)
                     }
                     AdManager.showLoginAdModal(this@MainActivity, adsCfg) {
@@ -1322,9 +1322,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val adsCfg = AdManager.fetchAdsConfig(this@MainActivity)
-                if (adsCfg.enabled) {
+                if (adsCfg.enabled && adsCfg.bottomBanner?.enabled == true) {
                     val banner = adsCfg.bottomBanner
-                    if (banner != null && banner.imageUrl.isNotBlank()) {
+                    if (banner.imageUrl.isNotBlank()) {
                         AdManager.loadBitmap(banner.imageUrl)
                     }
                     AdManager.bindBottomBanner(

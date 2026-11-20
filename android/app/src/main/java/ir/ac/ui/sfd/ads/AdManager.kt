@@ -293,12 +293,13 @@ object AdManager {
             return
         }
 
-        val isYektanet = config.provider.equals("yektanet", ignoreCase = true)
-        val customAd = config.loginAd
-        if (!isYektanet && (customAd == null || !customAd.enabled)) {
+        val loginAd = config.loginAd
+        if (loginAd == null || !loginAd.enabled) {
             onDismissed()
             return
         }
+
+        val isYektanet = config.provider.equals("yektanet", ignoreCase = true)
 
         val binding = DialogAdLoginBinding.inflate(activity.layoutInflater)
         val dialog = AlertDialog.Builder(activity)
@@ -314,15 +315,15 @@ object AdManager {
             val yk = config.yektanet ?: YektanetConfig()
             val posId = yk.loginPosId.ifBlank { "ynpos-21130" }
             setupYektanetWebView(binding.wvAdLoginYektanet, activity, posId, yk.scriptUrl, yk.domain)
-        } else if (customAd != null) {
+        } else {
             binding.layoutYektanetAd.visibility = View.GONE
             binding.layoutCustomAd.visibility = View.VISIBLE
 
-            binding.tvAdTitle.text = customAd.title.ifBlank { "پیام حامی مالی برنامه" }
-            binding.tvAdSubtitle.text = customAd.description.ifBlank { customAd.subtitle }
+            binding.tvAdTitle.text = loginAd.title.ifBlank { "پیام حامی مالی برنامه" }
+            binding.tvAdSubtitle.text = loginAd.description.ifBlank { loginAd.subtitle }
 
-            if (customAd.imageUrl.isNotBlank()) {
-                val bmp = imageCache[customAd.imageUrl]
+            if (loginAd.imageUrl.isNotBlank()) {
+                val bmp = imageCache[loginAd.imageUrl]
                 if (bmp != null) {
                     binding.ivAdImage.setImageBitmap(bmp)
                     binding.ivAdImage.visibility = View.VISIBLE
@@ -333,15 +334,15 @@ object AdManager {
                 binding.ivAdImage.visibility = View.GONE
             }
 
-            binding.btnAdAction.text = customAd.ctaText.ifBlank { "مشاهده و اطلاعات بیشتر 🔗" }
+            binding.btnAdAction.text = loginAd.ctaText.ifBlank { "مشاهده و اطلاعات بیشتر 🔗" }
             binding.btnAdAction.setOnClickListener {
-                openUrlSafely(activity, customAd.targetUrl)
+                openUrlSafely(activity, loginAd.targetUrl)
                 dialog.dismiss()
                 onDismissed()
             }
         }
 
-        var remainingSeconds = (customAd?.displaySeconds ?: 4).coerceIn(2, 10)
+        var remainingSeconds = loginAd.displaySeconds.coerceIn(2, 10)
         binding.btnSkipAd.text = "رد آگهی ($remainingSeconds)"
         binding.btnSkipAd.isEnabled = false
 
@@ -392,6 +393,12 @@ object AdManager {
             return
         }
 
+        val banner = config.bottomBanner
+        if (banner == null || !banner.enabled) {
+            container.visibility = View.GONE
+            return
+        }
+
         val isYektanet = config.provider.equals("yektanet", ignoreCase = true)
 
         if (isYektanet) {
@@ -407,12 +414,6 @@ object AdManager {
                 container.visibility = View.GONE
             }
         } else {
-            val banner = config.bottomBanner
-            if (banner == null || !banner.enabled) {
-                container.visibility = View.GONE
-                return
-            }
-
             yektanetLayout.visibility = View.GONE
             customLayout.visibility = View.VISIBLE
             container.visibility = View.VISIBLE
