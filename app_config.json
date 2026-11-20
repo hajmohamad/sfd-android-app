@@ -1,8 +1,8 @@
 {
-  "versionCode": 1,
-  "versionName": "1.0.0",
-  "minRequiredVersion": 1,
-  "isForceUpdate": false,
+  "versionCode": 2,
+  "versionName": "1.1.0",
+  "minRequiredVersion": 2,
+  "isForceUpdate": true,
   "title": "🚀 بروزرسانی سامانه کالینان",
   "message": "نسخه جدید سامانه تغذیه دانشگاه اصفهان منتشر شده است.",
   "releaseNotes": "• اضافه شدن ناوبری بین روزهای رستوران آزاد (یاس ۱ و ۲)\n• رفع مشکل عدم امکان ثبت سفارش ناهار و شام\n• اعمال قانون سقف ۱ غذا در هر وعده\n• سیستم بررسی خودکار بروزرسانی و تبلیغات هوشمند",
