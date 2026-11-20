@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>اتوماسیون سامانه تغذیه دانشگاه اصفهان (SFD)</title>
+  
+  <!-- iOS PWA Meta Tags -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="سلف اصفهان">
+  <meta name="theme-color" content="#0b0f19">
+
+  <!-- Icons & Manifest -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: rgba(22, 27, 46, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success-start: #059669;
+      --success-end: #10b981;
+      --warning-start: #d97706;
+      --warning-end: #f59e0b;
+      --danger: #ef4444;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --safe-top: env(safe-area-inset-top, 20px);
+      --safe-bottom: env(safe-area-inset-bottom, 20px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: var(--safe-top);
+      padding-bottom: calc(var(--safe-bottom) + 30px);
+      overflow-x: hidden;
+    }
+
+    /* Navigation Bar */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      background: rgba(11, 15, 25, 0.95);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.92);
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Student Badge */
+    .student-badge {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      margin-left: 6px;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    /* Balance Cards Grid */
+    .balance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .balance-card {
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 110px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-self {
+      background: linear-gradient(135deg, #064e3b, #047857);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .card-cafeteria {
+      background: linear-gradient(135deg, #7c2d12, #b45309);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .balance-title {
+      font-size: 12px;
+      opacity: 0.85;
+      font-weight: 500;
+    }
+
+    .balance-amount {
+      font-size: 17px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .balance-btn {
+      align-self: flex-start;
+      margin-top: 10px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Quick Action Card (Smart Reserve) */
+    .smart-reserve-card {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+    }
+
+    .smart-text-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e0e7ff;
+    }
+
+    .smart-text-sub {
+      font-size: 11px;
+      color: #a5b4fc;
+      margin-top: 2px;
+    }
+
+    .btn-sparkle {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    }
+
+    /* Segmented Tab Controls (iOS Style) */
+    .segmented-control {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .segmented-btn {
+      flex: 1;
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .segmented-btn.active {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Week Navigation & Meal Filters */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chips-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .chip-meal {
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .chip-meal.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: var(--primary);
+      color: #60a5fa;
+    }
+
+    .week-nav-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 4px 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .nav-arrow-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px 6px;
+    }
+
+    .week-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Day Card (Self-Service) */
+    .day-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .day-card.reserved {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .day-card.disabled {
+      opacity: 0.65;
+    }
+
+    .day-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .day-title-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .day-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .reserved-info {
+      font-size: 12px;
+      color: #34d399;
+      margin-top: 2px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+
+    .badge-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-primary {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .badge-secondary {
+      background: rgba(156, 163, 175, 0.15);
+      color: #9ca3af;
+    }
+
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    /* Form Controls */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .input-select, .input-text {
+      width: 100%;
+      background: rgba(11, 15, 25, 0.7);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .input-select:focus, .input-text:focus {
+      border-color: var(--primary);
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 11px 16px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:active {
+      background: var(--primary-hover);
+    }
+
+    .btn-danger-outline {
+      background: transparent;
+      border: 1px solid var(--danger);
+      color: var(--danger);
+    }
+
+    .btn-danger-outline:active {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Food Card (Cafeteria) */
+    .food-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .food-card.sold-out {
+      opacity: 0.55;
+    }
+
+    .food-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .food-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .food-price {
+      font-size: 13px;
+      color: #fbbf24;
+      font-weight: 600;
+    }
+
+    .food-card-action .btn {
+      width: auto;
+      padding: 6px 16px;
+      font-size: 12px;
+    }
+
+    /* Modals & Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    @media (min-width: 600px) {
+      .modal-backdrop {
+        align-items: center;
+      }
+    }
+
+    .modal-sheet {
+      background: #131826;
+      border: 1px solid var(--card-border);
+      width: 100%;
+      max-width: 480px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      padding: 24px 20px calc(var(--safe-bottom) + 20px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.25s ease-out;
+    }
+
+    @media (min-width: 600px) {
+      .modal-sheet {
+        border-radius: 24px;
+        padding: 24px;
+      }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Plan Review Rows */
+    .plan-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .plan-food-name {
+      display: block;
+      color: #93c5fd;
+      font-size: 12px;
+    }
+
+    .plan-badge {
+      font-size: 10px;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Toast Notifications */
+    #toast-container {
+      position: fixed;
+      top: calc(var(--safe-top) + 12px);
+      left: 16px;
+      right: 16px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.25s ease-out;
+      pointer-events: auto;
+    }
+
+    .toast-success { border-color: #10b981; }
+    .toast-error { border-color: #ef4444; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast.fade-out {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s;
+    }
+
+    /* Global Loader */
+    #global-loader {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 300;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Yektanet Ad Banners */
+    .yn-bnr {
+      width: 100% !important;
+      text-align: center;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Global Loader -->
+  <div id="global-loader">
+    <div class="spinner"></div>
+    <div id="global-loader-msg" style="font-size: 13px; font-weight: 600;">در حال پردازش...</div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🍽️</div>
+      <div>
+        <div class="brand-title">سلف دانشگاه اصفهان</div>
+        <div class="brand-subtitle">سامانه تغذیه کالینان (PWA)</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="btn-refresh" title="تازه‌سازی">🔄</button>
+      <button class="icon-btn" id="btn-settings" title="تنظیمات">⚙️</button>
+      <button class="icon-btn" id="btn-logout" title="خروج">🚪</button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Student Badge -->
+    <div class="student-badge">
+      <div>
+        <span class="badge-dot"></span>
+        <strong id="user-name">کاربر مهمان</strong>
+      </div>
+      <div id="user-id" style="color: var(--text-muted); font-size: 12px;">شماره دانشجویی: -</div>
+    </div>
+
+    <!-- Balance Cards -->
+    <div class="balance-grid">
+      <div class="balance-card card-self">
+        <div>
+          <div class="balance-title">اعتبار سلف عادی</div>
+          <div class="balance-amount" id="balance-self">۰ ریال</div>
+        </div>
+        <button class="balance-btn" id="btn-topup-self">افزایش اعتبار +</button>
+      </div>
+      <div class="balance-card card-cafeteria">
+        <div>
+          <div class="balance-title">اعتبار رستوران آزاد</div>
+          <div class="balance-amount" id="balance-caf">۰ ریال</div>
+        </div>
+        <button class="balance-btn" id="btn-topup-caf">افزایش اعتبار +</button>
+      </div>
+    </div>
+
+    <!-- Quick Smart Auto-Reserve Bar -->
+    <div class="smart-reserve-card">
+      <div>
+        <div class="smart-text-title">رزرو خودکار ۱-کلیکه ⚡</div>
+        <div class="smart-text-sub">انتخاب و ثبت کل هفته طبق سلیقه شما</div>
+      </div>
+      <button class="btn-sparkle" id="btn-smart-auto-reserve">
+        <span>رزرو هوشمند</span>
+      </button>
+    </div>
+
+    <!-- Segmented Control (Tabs) -->
+    <div class="segmented-control">
+      <button class="segmented-btn active" data-tab="self">سلف دانشگاه (هفتگی)</button>
+      <button class="segmented-btn" data-tab="cafeteria">رستوران آزاد (یاس ۱ و ۲)</button>
+    </div>
+
+    <!-- Filter Bar (Meals & Week Navigation) -->
+    <div class="filter-bar">
+      <div class="chips-group">
+        <button class="chip-meal" data-meal="صبحانه">صبحانه</button>
+        <button class="chip-meal active" data-meal="ناهار">ناهار</button>
+        <button class="chip-meal" data-meal="شام">شام</button>
+      </div>
+
+      <!-- Week Nav (For Self) -->
+      <div class="week-nav-box" id="box-week-nav">
+        <button class="nav-arrow-btn" id="btn-prev-week">▶</button>
+        <span class="week-label" id="week-label">هفته جاری</span>
+        <button class="nav-arrow-btn" id="btn-next-week">◀</button>
+      </div>
+
+      <!-- Restaurant Select (For Cafeteria) -->
+      <div id="box-restaurant-select" style="display: none; flex: 1; max-width: 170px;">
+        <select class="input-select" id="select-restaurant" style="padding: 5px 8px; font-size: 11px;">
+          <!-- Dynamically populated -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Views -->
+    <!-- 1. Self Service View -->
+    <div id="view-self">
+      <div id="self-days-list">
+        <!-- Day cards rendered here -->
+      </div>
+    </div>
+
+    <!-- 2. Cafeteria View -->
+    <div id="view-cafeteria" style="display: none;">
+      <div id="caf-items-list">
+        <!-- Cafeteria cards rendered here -->
+      </div>
+    </div>
+
+    <!-- Yektanet Bottom Banner -->
+    <div style="margin: 20px 0 10px; display: flex; justify-content: center; width: 100%; min-height: 50px;">
+      <div class="yn-bnr" id="ynpos-21129"></div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: Login -->
+  <div class="modal-backdrop" id="modal-login">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div class="modal-title">ورود به سامانه تغذیه</div>
+      </div>
+      <form id="form-login" style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="form-group">
+          <label>شماره دانشجویی / نام کاربری:</label>
+          <input type="text" class="input-text" id="login-username" required placeholder="مثال: 4013613037">
+        </div>
+        <div class="form-group">
+          <label>کلمه عبور:</label>
+          <input type="password" class="input-text" id="login-password" required placeholder="رمز عبور سامانه">
+        </div>
+        <div class="form-group">
+          <label>کد امنیتی (حل خودکار توسط OCR):</label>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="text" class="input-text" id="login-captcha" required maxlength="4" style="letter-spacing: 4px; font-size: 18px; text-align: center; width: 120px;">
+            <img id="captcha-img" alt="کپچا" style="height: 38px; border-radius: 6px; background: #fff; cursor: pointer;">
+            <button type="button" class="icon-btn" id="btn-refresh-captcha" title="کد جدید">🔄</button>
+          </div>
+          <small id="captcha-ocr-hint" style="font-size: 11px; color: #60a5fa; margin-top: 4px;"></small>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
+          <input type="checkbox" id="login-remember">
+          <label for="login-remember" style="font-size: 12px; color: var(--text-muted); cursor: pointer;">ذخیره اطلاعات ورود در این گوشی</label>
+        </div>
+
+        <!-- Yektanet Login Ad -->
+        <div style="margin: 4px 0; display: flex; justify-content: center; width: 100%; min-height: 50px;">
+          <div class="yn-bnr" id="ynpos-21130"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top: 4px;">ورود به سامانه</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Settings -->
+  <div class="modal-backdrop" id="modal-settings">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div class="modal-title">تنظیمات و اتصال به ورکر</div>
+        <button class="modal-close" onclick="AppUI.closeModal('modal-settings')">✕</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="form-group">
+          <label>آدرس Cloudflare Worker (بدون اسلش انتها):</label>
+          <input type="url" class="input-text" id="setting-worker-url" placeholder="https://sfd-proxy.your-name.workers.dev">
+          <small style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">
+            آدرس ورکر کلادفلری که برای عبور از CORS دیپلوی کرده‌اید.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>اولویت غذاهای ناهار (به ترتیب در هر خط):</label>
+          <textarea class="input-text" id="setting-lunch-priority" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>اولویت غذاهای شام (به ترتیب در هر خط):</label>
+          <textarea class="input-text" id="setting-dinner-priority" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>لیست سیاه غذاها (غذاهایی که هرگز رزرو نشوند):</label>
+          <textarea class="input-text" id="setting-blacklist" rows="2"></textarea>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <input type="checkbox" id="setting-skip-unmatched">
+          <label for="setting-skip-unmatched" style="font-size: 12px; color: var(--text-muted);">عدم رزرو در صورت نبود گزینه‌های اولویت‌دار</label>
+        </div>
+
+        <button class="btn btn-primary" id="btn-save-settings">ذخیره تنظیمات</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Auto-Reserve Plan Preview -->
+  <div class="modal-backdrop" id="modal-plan">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div class="modal-title">پیش‌نمایش رزرو هوشمند هفته</div>
+        <button class="modal-close" onclick="AppUI.closeModal('modal-plan')">✕</button>
+      </div>
+      <div id="plan-items-container" style="max-height: 240px; overflow-y: auto;">
+        <!-- Plan items -->
+      </div>
+      <div style="background: rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 12px;">
+        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+          <span>هزینه کل برنامه:</span>
+          <strong id="plan-total-cost">۰ ریال</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 13px;">
+          <span>موجودی سلف شما:</span>
+          <span id="plan-current-credit">۰ ریال</span>
+        </div>
+        <div id="plan-deficit-box" style="display: none; margin-top: 8px; color: #ef4444; font-size: 12px; border-top: 1px dashed rgba(239, 68, 68, 0.3); padding-top: 6px;">
+          کسری موجودی: <strong id="plan-deficit-amount">۰ ریال</strong>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="btn-execute-plan">تایید و رزرو</button>
+    </div>
+  </div>
+
+  <!-- MODAL: Top-up -->
+  <div class="modal-backdrop" id="modal-topup">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div class="modal-title" id="topup-modal-title">افزایش اعتبار</div>
+        <button class="modal-close" onclick="AppUI.closeModal('modal-topup')">✕</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="form-group">
+          <label>مبلغ شارژ (ریال):</label>
+          <input type="number" class="input-text" id="topup-amount" value="1000000" step="100000">
+        </div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button class="chip-meal chip-topup-quick" data-amt="500000">۵۰۰ هزار</button>
+          <button class="chip-meal chip-topup-quick" data-amt="1000000">۱ میلیون</button>
+          <button class="chip-meal chip-topup-quick" data-amt="2000000">۲ میلیون</button>
+          <button class="chip-meal chip-topup-quick" data-amt="3000000">۳ میلیون</button>
+        </div>
+        <button class="btn btn-primary" id="btn-start-payment">اتصال به درگاه بانکی شاپرک</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./ocr.js"></script>
+  <script src="./app.js"></script>
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+
+  <!-- Yektanet Script -->
+  <script>
+    !function(e,t,n){
+      e.yektanetAnalyticsObject=n,
+      e[n]=e[n]||function(){e[n].q.push(arguments)},
+      e[n].q=e[n].q||[];
+      var a=t.getElementsByTagName("head")[0],
+          r=new Date,
+          c="https://cdn.yektanet.com/superscript-v2/d1VRLx1w/native-rasafilm-dl2.xyz-4067/yn_pub.js?v="
+              +r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),
+          s=t.createElement("link");
+      s.rel="preload",
+      s.as="script",
+      s.href=c,
+      a.appendChild(s);
+      var l=t.createElement("script");
+      l.async=!0,
+      l.src=c,
+      a.appendChild(l);
+    }(window,document,"yektanet");
+  </script>
+
+</body>
+</html>

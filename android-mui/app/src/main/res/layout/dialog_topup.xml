@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/surface"
+    android:layoutDirection="rtl">
+
+    <!-- Header Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_badge_reserved">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_wallet"
+                app:tint="@color/primary" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTopupTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="افزایش اعتبار سلف عادی"
+                android:textColor="@color/primary"
+                android:textSize="18.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="درگاه امن شاپرک | پرداخت درون‌برنامه‌ای"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/border_subtle" />
+
+    <!-- Info Note -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#F0FDF4"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/badge_reserved_border"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_security_shield"
+                app:tint="#166534" />
+
+            <TextView
+                android:id="@+id/tvTopupInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="افزایش موجودی کیف پول صرفاً برای رزرو وعده‌های سلف عادی است. هزینه‌ی سفارش‌های رستوران آزاد (یاس) در لحظه پرداخت می‌شود."
+                android:textColor="#166534"
+                android:textSize="11.5sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Amount Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:hint="مبلغ شارژ (ریال)"
+        app:boxCornerRadiusBottomEnd="14dp"
+        app:boxCornerRadiusBottomStart="14dp"
+        app:boxCornerRadiusTopEnd="14dp"
+        app:boxCornerRadiusTopStart="14dp"
+        app:boxStrokeColor="@color/primary"
+        app:prefixText="ریال "
+        app:prefixTextColor="@color/primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etTopupAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:inputType="number"
+            android:text="1000000"
+            android:textColor="@color/text_primary"
+            android:textSize="17.5sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Live Toman Preview Helper -->
+    <TextView
+        android:id="@+id/tvTomanHelper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="معادل: ۱۰۰,۰۰۰ تومان"
+        android:textColor="@color/primary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Fast Quick Select Chips -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="مبالغ پرکاربرد:"
+        android:textColor="@color/text_secondary"
+        android:textSize="11.5sp" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnChip200"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="۲۰۰,۰۰۰ ریال"
+                android:textColor="@color/text_primary"
+                android:textSize="11.5sp"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/border_medium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnChip500"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:text="۵۰۰,۰۰۰ ریال"
+                android:textColor="@color/text_primary"
+                android:textSize="11.5sp"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/border_medium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnChip1000"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:text="۱,۰۰۰,۰۰۰ ریال"
+                android:textColor="@color/text_primary"
+                android:textSize="11.5sp"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/border_medium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnChip2000"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:text="۲,۰۰۰,۰۰۰ ریال"
+                android:textColor="@color/text_primary"
+                android:textSize="11.5sp"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/border_medium" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Start In-App Payment Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStartPayment"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/primary"
+        android:text="ورود به درگاه پرداخت شاپرک"
+        android:textColor="@color/white"
+        android:textSize="14.5sp"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_security_shield"
+        app:iconGravity="textStart"
+        app:iconSize="18dp"
+        app:iconTint="@color/white"
+        app:cornerRadius="14dp" />
+</LinearLayout>

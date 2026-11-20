@@ -1,0 +1,32 @@
+{
+  "enabled": true,
+  "provider": "custom",
+  "loginAd": {
+    "enabled": true,
+    "title": "کانال اطلاع‌رسانی سلف دانشگاه اصفهان",
+    "description": "عضویت در کانال دانشجویی دانشگاه اصفهان جهت دریافت منوی روز و زمان رزرو غذاها",
+    "imageUrl": "https://raw.githubusercontent.com/mohamadrahi/sfd/main/assets/banner_sample.png",
+    "targetUrl": "https://t.me/ui_sfd",
+    "ctaText": "عضویت در کانال تلگرام 🚀",
+    "displaySeconds": 3
+  },
+  "bottomBanner": {
+    "enabled": true,
+    "title": "سامانه اتوماسیون تغذیه دانشگاه اصفهان",
+    "subtitle": "ساعت رزرو ناهار: ۰۸:۵۵ الی ۱۵:۵۵ | شام: ۱۶:۰۰ الی ۲۱:۳۰",
+    "imageUrl": "",
+    "targetUrl": "https://sfd.ui.ac.ir",
+    "ctaText": "مشاهده پورتال"
+  },
+  "tapsell": {
+    "appKey": "",
+    "loginZoneId": "",
+    "bottomZoneId": ""
+  },
+  "yektanet": {
+    "scriptUrl": "https://cdn.yektanet.com/superscript-v2/d1VRLx1w/native-rasafilm-dl2.xyz-4067/yn_pub.js",
+    "domain": "https://rasafilm-dl2.xyz/",
+    "bottomPosId": "ynpos-21129",
+    "loginPosId": "ynpos-21130"
+  }
+}

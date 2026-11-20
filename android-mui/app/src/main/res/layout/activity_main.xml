@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:layoutDirection="rtl">
+
+    <!-- Modern App Bar with University Emerald Brand -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        app:elevation="3dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:title="سامانه تغذیه کالینان"
+            app:titleTextColor="@android:color/white"
+            app:subtitle="دانشگاه علوم پزشکی اصفهان | نسخه هوشمند"
+            app:subtitleTextColor="@color/text_emerald_subtitle">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="12dp">
+
+                <ImageButton
+                    android:id="@+id/btnSettings"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_glass_pill"
+                    android:contentDescription="تنظیمات اولویت‌ها"
+                    android:padding="9dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_preferences_sliders"
+                    app:tint="@android:color/white" />
+
+                <ImageButton
+                    android:id="@+id/btnLogout"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_glass_pill"
+                    android:contentDescription="خروج از حساب کاربری"
+                    android:padding="9dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_logout_arrow"
+                    app:tint="#FCA5A5" />
+            </LinearLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <!-- Segmented Tab Layout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/primary"
+            app:tabIndicatorColor="@color/accent"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="@color/accent"
+            app:tabTextColor="#E2E8F0"
+            app:tabIconTint="@color/white">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_restaurant"
+                android:text="سلف دانشجویی" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_order_food"
+                android:text="رستوران آزاد (یاس)" />
+        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main Content Container with Pull-to-Refresh -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="76dp">
+
+                <!-- Student Profile Bar Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="12dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1.5dp"
+                    app:strokeColor="@color/border_subtle"
+                    app:strokeWidth="1dp"
+                    app:cardBackgroundColor="@color/surface">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="12dp">
+
+                        <!-- Avatar icon container -->
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_badge_reserved">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="نماد دانشگاه"
+                                android:src="@drawable/ic_school_cap"
+                                app:tint="@color/primary" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvStudentProfile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="دانشجو: در حال برقراری ارتباط با سامانه..."
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_badge_reserved"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingHorizontal="7dp"
+                                    android:paddingVertical="2dp">
+
+                                    <ImageView
+                                        android:layout_width="8dp"
+                                        android:layout_height="8dp"
+                                        android:src="@drawable/ic_online_dot"
+                                        app:tint="@color/badge_reserved_text" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:text="نشست فعال"
+                                        android:textColor="@color/badge_reserved_text"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="دانشگاه علوم پزشکی اصفهان"
+                                    android:textColor="@color/text_tertiary"
+                                    android:textSize="11.5sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Fintech Digital Wallet Balance Cards -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:paddingTop="10dp">
+
+                    <!-- Self Service Card -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_balance_card_self"
+                        android:elevation="3dp"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="اعتبار سلف عادی"
+                                android:textColor="#D1FAE5"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_wallet"
+                                app:tint="#D1FAE5" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvSelfCredit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="۰ ریال"
+                            android:textColor="@android:color/white"
+                            android:textSize="17.5sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnTopupSelf"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_glass_pill"
+                            android:text="افزایش اعتبار"
+                            android:textColor="@android:color/white"
+                            android:textSize="11.5sp"
+                            android:textStyle="bold"
+                            app:icon="@drawable/ic_card_plus"
+                            app:iconGravity="textStart"
+                            app:iconSize="16dp"
+                            app:iconTint="@android:color/white"
+                            app:cornerRadius="19dp" />
+                    </LinearLayout>
+
+                    <!-- Free Restaurant / Yas Card -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_balance_card_cafeteria"
+                        android:elevation="3dp"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="اعتبار رستوران آزاد"
+                                android:textColor="#BAE6FD"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_order_food"
+                                app:tint="#BAE6FD" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvRestCredit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="۰ ریال"
+                            android:textColor="@android:color/white"
+                            android:textSize="17.5sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnViewCafeteria"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_glass_pill"
+                            android:paddingHorizontal="4dp"
+                            android:text="مشاهده منوی رستوران"
+                            android:textColor="@android:color/white"
+                            android:textSize="11.5sp"
+                            android:textStyle="bold"
+                            app:icon="@drawable/ic_restaurant"
+                            app:iconGravity="textStart"
+                            app:iconPadding="6dp"
+                            app:iconSize="15dp"
+                            app:iconTint="@android:color/white"
+                            app:cornerRadius="19dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Smart 1-Click Auto-Reserve Hero Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAutoReserve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/accent"
+                    app:strokeWidth="1.5dp"
+                    app:cardBackgroundColor="#FFFDF5">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <FrameLayout
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/bg_badge_warning">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_sparkle_auto"
+                                app:tint="@color/accent" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="رزرو خودکار هفته (دستیار هوشمند)"
+                                android:textColor="#B45309"
+                                android:textSize="13.5sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="رزرو یکجای تمام روزهای هفته بر اساس سلیقه شما"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnRunAutoReserve"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:backgroundTint="@color/accent"
+                            android:text="اجرای خودکار"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="10dp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ==================== SECTION 1: SELF SERVICE TAB ==================== -->
+                <LinearLayout
+                    android:id="@+id/sectionSelf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical">
+
+                    <!-- Week Navigation Header Bar -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLastWeek"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:paddingHorizontal="12dp"
+                            android:text="هفته قبل"
+                            android:textColor="@color/text_primary"
+                            android:textSize="11.5sp"
+                            app:icon="@drawable/ic_chevron_right"
+                            app:iconGravity="textStart"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/text_primary"
+                            app:cornerRadius="12dp"
+                            app:strokeColor="@color/border_medium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_badge_capacity"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="8dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/ic_calendar"
+                                app:tint="@color/badge_capacity_text" />
+
+                            <TextView
+                                android:id="@+id/tvCurrentWeek"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:text="هفته جاری"
+                                android:textColor="@color/badge_capacity_text"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNextWeek"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:paddingHorizontal="12dp"
+                            android:text="هفته بعد"
+                            android:textColor="@color/text_primary"
+                            android:textSize="11.5sp"
+                            app:icon="@drawable/ic_chevron_left"
+                            app:iconGravity="textEnd"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/text_primary"
+                            app:cornerRadius="12dp"
+                            app:strokeColor="@color/border_medium" />
+                    </LinearLayout>
+
+                    <!-- Meal Selector Filter Chips -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cgMeals"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipLunch"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="ناهار"
+                                android:textSize="12.5sp"
+                                app:chipIcon="@drawable/ic_meal_sun"
+                                app:chipIconSize="18dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipDinner"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="شام"
+                                android:textSize="12.5sp"
+                                app:chipIcon="@drawable/ic_meal_moon"
+                                app:chipIconSize="18dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipBreakfast"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="صبحانه"
+                                android:textSize="12.5sp"
+                                app:chipIcon="@drawable/ic_meal_coffee"
+                                app:chipIconSize="18dp" />
+                        </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
+
+                    <!-- Top Global Self Facility Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardGlobalSelf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1dp"
+                        app:strokeColor="@color/badge_reserved_border"
+                        app:strokeWidth="1dp"
+                        app:cardBackgroundColor="#F0FDF4">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_building_location"
+                                    app:tint="@color/primary" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_weight="1"
+                                    android:text="محل تحویل (سلف انتخابی تمام روزها):"
+                                    android:textColor="@color/on_primary_container"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvDefaultSelfBadge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_badge_reserved"
+                                    android:paddingHorizontal="8dp"
+                                    android:paddingVertical="3dp"
+                                    android:text="سلف پیش‌فرض شما"
+                                    android:textColor="@color/badge_reserved_text"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/spGlobalSelf"
+                                android:layout_width="match_parent"
+                                android:layout_height="46dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_spinner" />
+
+                            <TextView
+                                android:id="@+id/tvSelfSelectorHint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="این سلف به تمام روزهای هفته اعمال می‌شود؛ برای هر روز نیز می‌توانید سلف جداگانه تعیین کنید."
+                                android:textColor="#166534"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Days List RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvWeeklyDays"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+
+                <!-- ==================== SECTION 2: CAFETERIA TAB ==================== -->
+                <LinearLayout
+                    android:id="@+id/sectionCafeteria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Day Navigation Bar for Cafeteria -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLastCafDay"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:paddingHorizontal="12dp"
+                            android:text="روز قبل"
+                            android:textColor="@color/text_primary"
+                            android:textSize="11.5sp"
+                            app:icon="@drawable/ic_chevron_right"
+                            app:iconGravity="textStart"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/text_primary"
+                            app:cornerRadius="12dp"
+                            app:strokeColor="@color/border_medium" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/ic_calendar"
+                                app:tint="@color/badge_capacity_text" />
+
+                            <TextView
+                                android:id="@+id/tvCurrentCafDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:text="امروز"
+                                android:textColor="@color/badge_capacity_text"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnNextCafDay"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:paddingHorizontal="12dp"
+                            android:text="روز بعد"
+                            android:textColor="@color/text_primary"
+                            android:textSize="11.5sp"
+                            app:icon="@drawable/ic_chevron_left"
+                            app:iconGravity="textEnd"
+                            app:iconSize="16dp"
+                            app:iconTint="@color/text_primary"
+                            app:cornerRadius="12dp"
+                            app:strokeColor="@color/border_medium" />
+                    </LinearLayout>
+
+                    <!-- Top Free Restaurant Selector Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardRestaurantSelector"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1dp"
+                        app:strokeColor="@color/badge_capacity_border"
+                        app:strokeWidth="1dp"
+                        app:cardBackgroundColor="#F0F9FF">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_building_location"
+                                app:tint="@color/badge_capacity_text" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_weight="1"
+                                    android:text="رستوران یا بوفه انتخابی:"
+                                    android:textColor="@color/badge_capacity_text"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:id="@+id/tvLiveCapacityBadge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_badge_capacity"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingHorizontal="8dp"
+                                    android:paddingVertical="3dp">
+
+                                    <ImageView
+                                        android:layout_width="8dp"
+                                        android:layout_height="8dp"
+                                        android:src="@drawable/ic_online_dot"
+                                        app:tint="@color/badge_capacity_text" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:text="بروزرسانی زنده ظرفیت"
+                                        android:textColor="@color/badge_capacity_text"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <Spinner
+                                android:id="@+id/spRestaurants"
+                                android:layout_width="match_parent"
+                                android:layout_height="46dp"
+                                android:layout_marginTop="8dp"
+                                android:background="@drawable/bg_spinner" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="منو و ظرفیت باقیمانده زنده بر اساس رستوران انتخاب‌شده در بالا بروزرسانی می‌شود."
+                                android:textColor="#0369A1"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Meal Filter Chips for Cafeteria -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cgCafMeals"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipCafLunch"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="ناهار"
+                                android:textSize="12.5sp"
+                                app:chipIcon="@drawable/ic_meal_sun"
+                                app:chipIconSize="18dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipCafDinner"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="شام"
+                                android:textSize="12.5sp"
+                                app:chipIcon="@drawable/ic_meal_moon"
+                                app:chipIconSize="18dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chipCafBreakfast"
+                                style="@style/Widget.Material3.Chip.Filter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="صبحانه"
+                                android:textSize="12.5sp"
+                                app:chipIcon="@drawable/ic_meal_coffee"
+                                app:chipIconSize="18dp" />
+                        </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
+
+                    <!-- Cafeteria Dishes RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvCafeteriaFoods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false" />
+
+                    <!-- Empty state view when no foods for the day -->
+                    <LinearLayout
+                        android:id="@+id/layoutCafEmptyState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_empty_box"
+                            app:tint="@color/text_tertiary" />
+
+                        <TextView
+                            android:id="@+id/tvCafEmptyState"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="غذایی برای این روز و وعده در این رستوران ثبت نشده است."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!-- Bottom Ad Banner Container -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardBottomBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/border_subtle"
+        app:cardBackgroundColor="@color/surface">
+
+        <!-- Custom Banner Layout -->
+        <LinearLayout
+            android:id="@+id/layoutBottomBannerCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:id="@+id/ivBottomBanner"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_badge_capacity"
+                android:src="@drawable/ic_order_food" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvBottomBannerTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="حامی مالی"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:background="@drawable/bg_badge_warning"
+                        android:paddingHorizontal="5dp"
+                        android:paddingVertical="1dp"
+                        android:text="تبلیغ"
+                        android:textColor="@color/badge_warning_text"
+                        android:textSize="9.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvBottomBannerSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="تخفیف ویژه دانشجویان دانشگاه علوم پزشکی اصفهان"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBottomBannerAction"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:paddingHorizontal="10dp"
+                android:text="مشاهده"
+                android:textSize="11sp"
+                app:cornerRadius="10dp" />
+
+            <ImageView
+                android:id="@+id/btnDismissBottomBanner"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="6dp"
+                android:src="@drawable/ic_cancel_circle"
+                app:tint="@color/text_tertiary" />
+        </LinearLayout>
+
+        <!-- Yektanet Native Script Banner Layout -->
+        <RelativeLayout
+            android:id="@+id/layoutBottomBannerYektanet"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:visibility="gone">
+
+            <WebView
+                android:id="@+id/wvBottomBannerYektanet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/btnDismissYektanetBanner"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="6dp"
+                android:src="@drawable/ic_cancel_circle"
+                app:tint="@color/text_tertiary" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

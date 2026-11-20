@@ -1,0 +1,43 @@
+{
+  "versionCode": 1,
+  "versionName": "1.0.0",
+  "minRequiredVersion": 1,
+  "isForceUpdate": false,
+  "title": "🚀 بروزرسانی سامانه کالینان",
+  "message": "نسخه جدید سامانه تغذیه دانشگاه اصفهان منتشر شده است.",
+  "releaseNotes": "• اضافه شدن ناوبری بین روزهای رستوران آزاد (یاس ۱ و ۲)\n• رفع مشکل عدم امکان ثبت سفارش ناهار و شام\n• اعمال قانون سقف ۱ غذا در هر وعده\n• سیستم بررسی خودکار بروزرسانی و تبلیغات هوشمند",
+  "downloadUrl": "https://github.com/mohamadrahi/sfd/releases/latest",
+  "directApkUrl": "https://github.com/mohamadrahi/sfd/releases/latest/download/app-debug.apk",
+  "ads": {
+    "enabled": true,
+    "provider": "custom",
+    "loginAd": {
+      "enabled": true,
+      "title": "حامی مالی دانشجویان دانشگاه اصفهان",
+      "description": "تخفیف ویژه کتاب‌های تخصصی دانشگاهی و خدمات دانشجویی",
+      "imageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800",
+      "targetUrl": "https://ui.ac.ir",
+      "ctaText": "مشاهده تخفیف 🔗",
+      "displaySeconds": 3
+    },
+    "bottomBanner": {
+      "enabled": true,
+      "title": "کتابفروشی دانشجو",
+      "subtitle": "ارسال رایگان به تمامی خوابگاه‌های دانشگاه اصفهان",
+      "imageUrl": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=200",
+      "targetUrl": "https://ui.ac.ir",
+      "ctaText": "مشاهده"
+    },
+    "tapsell": {
+      "appKey": "",
+      "loginZoneId": "",
+      "bottomZoneId": ""
+    },
+    "yektanet": {
+      "scriptUrl": "https://cdn.yektanet.com/superscript-v2/d1VRLx1w/native-rasafilm-dl2.xyz-4067/yn_pub.js",
+      "domain": "https://rasafilm-dl2.xyz/",
+      "bottomPosId": "ynpos-21129",
+      "loginPosId": "ynpos-21130"
+    }
+  }
+}
