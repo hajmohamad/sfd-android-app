@@ -111,7 +111,7 @@
             app:cardElevation="0dp"
             app:strokeColor="@color/badge_reserved_border"
             app:strokeWidth="1dp"
-            app:cardBackgroundColor="#F0FDF4"
+            app:cardBackgroundColor="#EFF6FF"
             android:visibility="gone">
 
             <LinearLayout
@@ -156,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
                         android:text="محل تحویل: سلف اختران (برادران)"
-                        android:textColor="#166534"
+                        android:textColor="#1E3A8A"
                         android:textSize="11.5sp" />
                 </LinearLayout>
 

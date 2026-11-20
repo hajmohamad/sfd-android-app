@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand / Primary Palette (University Emerald) -->
-    <color name="primary">#0A5C36</color>
-    <color name="primary_dark">#043E23</color>
-    <color name="primary_light">#16A34A</color>
-    <color name="primary_container">#ECFDF5</color>
-    <color name="on_primary_container">#064E3B</color>
+    <!-- Brand / Primary Palette (Modern University Deep Navy) -->
+    <color name="primary">#0A2540</color>
+    <color name="primary_dark">#06182A</color>
+    <color name="primary_light">#2563EB</color>
+    <color name="primary_container">#EFF6FF</color>
+    <color name="on_primary_container">#1E3A8A</color>
 
-    <!-- Secondary / Accent (Warm Saffron Amber) -->
-    <color name="accent">#D97706</color>
-    <color name="accent_dark">#B45309</color>
-    <color name="accent_container">#FEF3C7</color>
-    <color name="on_accent_container">#78350F</color>
+    <!-- Secondary / Accent (Sky Blue & Vibrant Royal) -->
+    <color name="accent">#0284C7</color>
+    <color name="accent_dark">#0369A1</color>
+    <color name="accent_container">#E0F2FE</color>
+    <color name="on_accent_container">#0C4A6E</color>
 
     <!-- Surfaces & Backgrounds -->
     <color name="bg_app">#F8FAFC</color>
@@ -24,7 +24,7 @@
     <color name="text_secondary">#475569</color>
     <color name="text_tertiary">#64748B</color>
     <color name="text_on_dark">#FFFFFF</color>
-    <color name="text_emerald_subtitle">#D1FAE5</color>
+    <color name="text_emerald_subtitle">#BFDBFE</color>
 
     <!-- Borders & Dividers -->
     <color name="border_subtle">#E2E8F0</color>
@@ -32,9 +32,9 @@
     <color name="border_dark">#94A3B8</color>
 
     <!-- Status Badges & Pills -->
-    <color name="badge_reserved_bg">#ECFDF5</color>
-    <color name="badge_reserved_text">#047857</color>
-    <color name="badge_reserved_border">#A7F3D0</color>
+    <color name="badge_reserved_bg">#EFF6FF</color>
+    <color name="badge_reserved_text">#1D4ED8</color>
+    <color name="badge_reserved_border">#BFDBFE</color>
 
     <color name="badge_capacity_bg">#EFF6FF</color>
     <color name="badge_capacity_text">#1D4ED8</color>
@@ -53,9 +53,9 @@
     <color name="badge_expired_border">#E2E8F0</color>
 
     <!-- Fintech Wallet Gradients -->
-    <color name="wallet_self_start">#064E3B</color>
-    <color name="wallet_self_mid">#047857</color>
-    <color name="wallet_self_end">#059669</color>
+    <color name="wallet_self_start">#0A2540</color>
+    <color name="wallet_self_mid">#1E3A8A</color>
+    <color name="wallet_self_end">#2563EB</color>
     <color name="wallet_rest_start">#0F172A</color>
     <color name="wallet_rest_mid">#0369A1</color>
     <color name="wallet_rest_end">#0284C7</color>

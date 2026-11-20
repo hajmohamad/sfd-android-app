@@ -12,6 +12,8 @@ import android.view.View
 import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import ir.ac.ui.sfd.databinding.ActivityPaymentBinding
 
 class InAppPaymentActivity : AppCompatActivity() {
@@ -33,6 +35,16 @@ class InAppPaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { v, windowInsets ->
+            val statusBarInsets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            val minTopPadding = (resources.displayMetrics.density * 28).toInt()
+            val topPadding = maxOf(statusBarInsets.top, minTopPadding)
+            v.setPadding(v.paddingLeft, topPadding, v.paddingRight, v.paddingBottom)
+            windowInsets
+        }
 
         initialUrl = intent.getStringExtra(EXTRA_URL) ?: "https://sfd.ui.ac.ir/ePay/ePay_Payment.aspx"
         paymentAmount = intent.getLongExtra(EXTRA_AMOUNT, 0L)

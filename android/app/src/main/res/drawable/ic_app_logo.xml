@@ -4,12 +4,12 @@
     android:height="64dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Deep Emerald Circular Base -->
+    <!-- Deep Navy Circular Base -->
     <path
-        android:fillColor="#0A5C36"
+        android:fillColor="#0A2540"
         android:pathData="M54,54m-52,0a52,52 0 1,0 104,0a52,52 0 1,0 -104,0"/>
     <path
-        android:fillColor="#15803D"
+        android:fillColor="#1E3A8A"
         android:pathData="M54,54m-48,0a48,48 0 1,0 96,0a48,48 0 1,0 -96,0"/>
 
     <group

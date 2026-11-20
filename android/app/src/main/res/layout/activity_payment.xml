@@ -10,7 +10,10 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
         android:background="@color/primary"
         app:contentInsetStart="12dp"
         app:contentInsetEnd="12dp">
@@ -90,7 +93,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ECFDF5"
+        android:background="#EFF6FF"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingVertical="7dp"
@@ -100,14 +103,14 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_security_shield"
-            app:tint="#047857" />
+            app:tint="#1D4ED8" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:text="اتصال رمزنگاری‌شده شاپرک (SSL) | درگاه رسمی بانک مرکزی"
-            android:textColor="#047857"
+            android:textColor="#1D4ED8"
             android:textSize="11.5sp"
             android:textStyle="bold" />
     </LinearLayout>

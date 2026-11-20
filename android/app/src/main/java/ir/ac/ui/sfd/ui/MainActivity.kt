@@ -38,6 +38,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import ir.ac.ui.sfd.worker.AutoReserveReceiver
 import ir.ac.ui.sfd.worker.AutoReserveScheduler
 import java.util.Calendar
@@ -95,6 +97,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Handle window insets to prevent status bar overlap and ensure clean top clearance
+        ViewCompat.setOnApplyWindowInsetsListener(binding.appBarLayout) { v, windowInsets ->
+            val statusBarInsets = windowInsets.getInsets(
+                WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout()
+            )
+            val minTopPadding = (resources.displayMetrics.density * 28).toInt()
+            val topPadding = maxOf(statusBarInsets.top, minTopPadding)
+            v.setPadding(v.paddingLeft, topPadding, v.paddingRight, v.paddingBottom)
+            windowInsets
+        }
 
         sfdClient = SFDClient(this)
         captchaOcr = CaptchaOCR(this)

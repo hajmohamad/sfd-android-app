@@ -65,7 +65,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#F0FDF4"
+        app:cardBackgroundColor="#EFF6FF"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         app:strokeColor="@color/badge_reserved_border"
@@ -82,7 +82,7 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:src="@drawable/ic_security_shield"
-                app:tint="#166534" />
+                app:tint="#1D4ED8" />
 
             <TextView
                 android:id="@+id/tvTopupInfo"
@@ -91,7 +91,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="افزایش موجودی کیف پول صرفاً برای رزرو وعده‌های سلف عادی است. هزینه‌ی سفارش‌های رستوران آزاد (یاس) در لحظه پرداخت می‌شود."
-                android:textColor="#166534"
+                android:textColor="#1E3A8A"
                 android:textSize="11.5sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
