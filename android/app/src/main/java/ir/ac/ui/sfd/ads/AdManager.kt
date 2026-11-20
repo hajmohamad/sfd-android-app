@@ -61,7 +61,7 @@ data class AdsConfig(
 
 object AdManager {
 
-    const val DEFAULT_ADS_URL = "https://raw.githubusercontent.com/mohamadrahi/sfd/main/app_config.json"
+    const val DEFAULT_ADS_URL = "https://raw.githubusercontent.com/hajmohamad/sfd-android-app/main/app_config.json"
 
     private val httpClient = OkHttpClient.Builder()
         .connectTimeout(6, TimeUnit.SECONDS)
@@ -73,7 +73,11 @@ object AdManager {
 
     fun getAdsUrl(context: Context): String {
         val sp = context.getSharedPreferences("sfd_prefs", Context.MODE_PRIVATE)
-        return sp.getString("ads_url", DEFAULT_ADS_URL) ?: DEFAULT_ADS_URL
+        val saved = sp.getString("ads_url", null)
+        if (saved.isNullOrBlank() || saved.contains("mohamadrahi/sfd")) {
+            return DEFAULT_ADS_URL
+        }
+        return saved
     }
 
     fun setAdsUrl(context: Context, url: String) {

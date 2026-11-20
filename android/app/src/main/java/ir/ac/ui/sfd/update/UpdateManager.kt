@@ -30,7 +30,7 @@ object UpdateManager {
 
     // Default remote repository configuration URL for version check
     // Can be overridden in SharedPreferences (sfd_prefs -> update_url)
-    const val DEFAULT_UPDATE_URL = "https://raw.githubusercontent.com/mohamadrahi/sfd/main/app_config.json"
+    const val DEFAULT_UPDATE_URL = "https://raw.githubusercontent.com/hajmohamad/sfd-android-app/main/app_config.json"
 
     private val httpClient = OkHttpClient.Builder()
         .connectTimeout(8, TimeUnit.SECONDS)
@@ -39,7 +39,11 @@ object UpdateManager {
 
     fun getUpdateUrl(context: Context): String {
         val sp = context.getSharedPreferences("sfd_prefs", Context.MODE_PRIVATE)
-        return sp.getString("update_url", DEFAULT_UPDATE_URL) ?: DEFAULT_UPDATE_URL
+        val saved = sp.getString("update_url", null)
+        if (saved.isNullOrBlank() || saved.contains("mohamadrahi/sfd")) {
+            return DEFAULT_UPDATE_URL
+        }
+        return saved
     }
 
     fun setUpdateUrl(context: Context, url: String) {

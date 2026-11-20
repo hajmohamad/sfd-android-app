@@ -5,7 +5,7 @@
     "enabled": true,
     "title": "کانال اطلاع‌رسانی سلف دانشگاه اصفهان",
     "description": "عضویت در کانال دانشجویی دانشگاه اصفهان جهت دریافت منوی روز و زمان رزرو غذاها",
-    "imageUrl": "https://raw.githubusercontent.com/mohamadrahi/sfd/main/assets/banner_sample.png",
+    "imageUrl": "https://raw.githubusercontent.com/hajmohamad/sfd-android-app/main/assets/banner_sample.png",
     "targetUrl": "https://t.me/ui_sfd",
     "ctaText": "عضویت در کانال تلگرام 🚀",
     "displaySeconds": 3

@@ -6,8 +6,8 @@
   "title": "🚀 بروزرسانی سامانه کالینان",
   "message": "نسخه جدید سامانه تغذیه دانشگاه اصفهان منتشر شده است.",
   "releaseNotes": "• اضافه شدن ناوبری بین روزهای رستوران آزاد (یاس ۱ و ۲)\n• رفع مشکل عدم امکان ثبت سفارش ناهار و شام\n• اعمال قانون سقف ۱ غذا در هر وعده\n• سیستم بررسی خودکار بروزرسانی و تبلیغات هوشمند",
-  "downloadUrl": "https://github.com/mohamadrahi/sfd/releases/latest",
-  "directApkUrl": "https://github.com/mohamadrahi/sfd/releases/latest/download/app-debug.apk",
+  "downloadUrl": "https://github.com/hajmohamad/sfd-android-app/releases/latest",
+  "directApkUrl": "https://github.com/hajmohamad/sfd-android-app/releases/latest/download/app-debug.apk",
   "ads": {
     "enabled": true,
     "provider": "custom",
