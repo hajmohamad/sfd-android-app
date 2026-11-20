@@ -1006,25 +1006,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Remote Update & Ads Config Bindings
-        dBinding.tvCurrentVersionBadge.text = "نسخه ${BuildConfig.VERSION_NAME}"
-        dBinding.etUpdateUrl.setText(UpdateManager.getUpdateUrl(this))
-        dBinding.etAdsUrl.setText(AdManager.getAdsUrl(this))
-
-        dBinding.btnCheckAppUpdate.setOnClickListener {
-            dBinding.btnCheckAppUpdate.isEnabled = false
-            lifecycleScope.launch {
-                try {
-                    val info = UpdateManager.checkRemoteUpdate(this@MainActivity)
-                    UpdateManager.promptUpdateIfNeeded(this@MainActivity, info, isManualCheck = true)
-                } catch (e: Exception) {
-                    Toast.makeText(this@MainActivity, "خطا در بررسی بروزرسانی: ${e.message}", Toast.LENGTH_SHORT).show()
-                } finally {
-                    dBinding.btnCheckAppUpdate.isEnabled = true
-                }
-            }
-        }
-
         dBinding.btnSavePreferences.setOnClickListener {
             preferences.lunchPriority = dBinding.etLunchPriority.text.toString().split("،", ",").map { it.trim() }.filter { it.isNotBlank() }.toMutableList()
             preferences.dinnerPriority = dBinding.etDinnerPriority.text.toString().split("،", ",").map { it.trim() }.filter { it.isNotBlank() }.toMutableList()
@@ -1036,11 +1017,6 @@ class MainActivity : AppCompatActivity() {
             preferences.autoReserveHour = selectedHour
             preferences.autoReserveMinute = selectedMinute
             preferences.notifyOnDeficit = dBinding.cbNotifyOnDeficit.isChecked
-
-            val newUpdateUrl = dBinding.etUpdateUrl.text?.toString() ?: ""
-            val newAdsUrl = dBinding.etAdsUrl.text?.toString() ?: ""
-            UpdateManager.setUpdateUrl(this, newUpdateUrl)
-            AdManager.setAdsUrl(this, newAdsUrl)
 
             savePreferences()
             AutoReserveScheduler.scheduleOrUpdate(this, preferences)
