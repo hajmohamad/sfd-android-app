@@ -1,6 +1,6 @@
 {
   "enabled": true,
-  "provider": "custom",
+  "provider": "yektanet",
   "loginAd": {
     "enabled": true,
     "title": "کانال اطلاع‌رسانی سلف دانشگاه اصفهان",

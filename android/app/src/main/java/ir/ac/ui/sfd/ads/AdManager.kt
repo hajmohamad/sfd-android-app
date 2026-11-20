@@ -179,17 +179,16 @@ object AdManager {
                     * { margin: 0; padding: 0; box-sizing: border-box; }
                     html, body {
                         background-color: transparent !important;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        overflow: hidden;
                         width: 100%;
-                        height: 100%;
+                        min-height: 100%;
+                        margin: 0;
+                        padding: 0;
                     }
                     .yn-bnr {
                         width: 100% !important;
-                        text-align: center;
+                        min-height: 50px;
                         margin: 0 auto;
+                        text-align: center;
                     }
                 </style>
             </head>
@@ -222,30 +221,67 @@ object AdManager {
 
     @SuppressLint("SetJavaScriptEnabled")
     fun setupYektanetWebView(webView: WebView, context: Context, posId: String, scriptUrl: String, domain: String) {
+        val cookieManager = android.webkit.CookieManager.getInstance()
+        cookieManager.setAcceptCookie(true)
+        cookieManager.setAcceptThirdPartyCookies(webView, true)
+
         webView.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
+            databaseEnabled = true
+            allowFileAccess = true
+            allowContentAccess = true
             loadWithOverviewMode = true
             useWideViewPort = true
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+
+            val defaultUa = userAgentString ?: ""
+            userAgentString = if (defaultUa.contains("; wv")) {
+                defaultUa.replace("; wv", "")
+            } else if (defaultUa.isNotBlank()) {
+                defaultUa
+            } else {
+                "Mozilla/5.0 (Linux; Android 14; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36"
+            }
         }
         webView.setBackgroundColor(0) // Transparent
+
+        webView.webChromeClient = object : android.webkit.WebChromeClient() {
+            override fun onConsoleMessage(consoleMessage: android.webkit.ConsoleMessage?): Boolean {
+                android.util.Log.d("YektanetAd", "Console [${consoleMessage?.messageLevel()}]: ${consoleMessage?.message()} (line ${consoleMessage?.lineNumber()} of ${consoleMessage?.sourceId()})")
+                return true
+            }
+        }
+
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url?.toString() ?: return false
+                if (url.startsWith("data:") || url.startsWith("about:") || url.startsWith("javascript:")) {
+                    return false
+                }
+                if (url.contains("yektanet.com") || url.contains("rasafilm-dl2.xyz")) {
+                    return false
+                }
                 openUrlSafely(context, url)
                 return true
             }
 
+            @Deprecated("Deprecated in Java")
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 if (url.isNullOrBlank()) return false
+                if (url.startsWith("data:") || url.startsWith("about:") || url.startsWith("javascript:")) {
+                    return false
+                }
+                if (url.contains("yektanet.com") || url.contains("rasafilm-dl2.xyz")) {
+                    return false
+                }
                 openUrlSafely(context, url)
                 return true
             }
         }
         val html = buildYektanetHtml(posId, scriptUrl)
         val base = if (domain.isNotBlank()) domain else "https://rasafilm-dl2.xyz/"
-        webView.loadDataWithBaseURL(base, html, "text/html", "UTF-8", null)
+        webView.loadDataWithBaseURL(base, html, "text/html", "UTF-8", base)
     }
 
     /**
