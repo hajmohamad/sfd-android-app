@@ -2,7 +2,7 @@
   "enabled": true,
   "provider": "yektanet",
   "loginAd": {
-    "enabled": true,
+    "enabled": false,
     "title": "کانال اطلاع‌رسانی سلف دانشگاه اصفهان",
     "description": "عضویت در کانال دانشجویی دانشگاه اصفهان جهت دریافت منوی روز و زمان رزرو غذاها",
     "imageUrl": "https://raw.githubusercontent.com/hajmohamad/sfd-android-app/main/assets/banner_sample.png",
